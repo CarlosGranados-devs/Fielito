@@ -224,6 +224,10 @@ export default function ScanPage() {
   if (!profile) return null;
 
   const resultBusiness = scanResult?.business;
+  const missingToReward =
+    scanResult && resultBusiness
+      ? resultBusiness.requiredStamps - scanResult.stampsAfter
+      : 0;
   const cardForResult = scanResult
     ? cards.find((item) => item.business.id === scanResult.business.id)
     : null;
@@ -457,9 +461,7 @@ export default function ScanPage() {
                   <p className="mt-1 text-[10px] leading-relaxed text-slate-500">
                     {scanResult.completed
                       ? "Muéstralo en el local para reclamar tu premio. Al canjearlo, la tarjeta vuelve a cero."
-                      : `Te faltan ${
-                          resultBusiness.requiredStamps - scanResult.stampsAfter
-                        } sellos para tu recompensa.`}
+                      : `Te ${missingToReward === 1 ? "falta 1 sello" : `faltan ${missingToReward} sellos`} para tu recompensa.`}
                   </p>
                 </div>
 

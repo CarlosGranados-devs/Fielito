@@ -63,6 +63,9 @@ export default function WalletPage() {
         b.card.currentStamps / b.business.requiredStamps -
         a.card.currentStamps / a.business.requiredStamps,
     )[0];
+  const missingStamps = nextReward
+    ? nextReward.business.requiredStamps - nextReward.card.currentStamps
+    : 0;
 
   function handleClaim() {
     if (!selected) return;
@@ -99,7 +102,7 @@ export default function WalletPage() {
           </h1>
           <p className="mt-1 text-sm text-slate-500">
             {nextReward
-              ? `Te faltan ${nextReward.business.requiredStamps - nextReward.card.currentStamps} sellos para tu premio en ${nextReward.business.name}.`
+              ? `Te ${missingStamps === 1 ? "falta 1 sello" : `faltan ${missingStamps} sellos`} para tu premio en ${nextReward.business.name}.`
               : "Todas tus tarjetas están al día. ¡A seguir sumando!"}
           </p>
         </div>
